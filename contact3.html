@@ -36,6 +36,32 @@
   ======================================================== -->
 </head>
 
+<!-- EmailJS SDK 로드 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  // 본인의 Public Key를 입력해 초기화
+  (function() {
+      emailjs.init({
+        publicKey: "E4Z2O1i7cW0F4F35p"
+      });
+  })();
+
+  window.onload = function() {
+      document.getElementById('contact-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          // serviceID와 templateID, 그리고 form 요소를 전달
+          emailjs.sendForm('service_fyyno6t', 'template_iox8ggo', this)
+              .then(() => {
+                  alert('메일이 성공적으로 전송되었습니다!');
+                  this.reset();
+              }, (error) => {
+                  alert('메일 전송에 실패했습니다: ' + JSON.stringify(error));
+              });
+      });
+  };
+</script>
+
 <body>
 
   <!-- ======= Header ======= -->
@@ -133,7 +159,7 @@
           </div>
 
           <div class="col-lg-6">
-            <form action="contact.html" method="post" role="form" >
+            <form id="contact-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
